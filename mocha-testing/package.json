@@ -1,0 +1,36 @@
+{
+  "name": "mocha-testing",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6",
+    "react-scripts": "2.1.8"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test:unit": "mocha --require @babel/register --require ./test/helpers.js --require ./test/dom.js",
+    "test:unit:watch": "npm run test:unit -- --watch",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ],
+  "devDependencies": {
+    "@babel/register": "^7.4.0",
+    "babel-preset-es2015": "^6.24.1",
+    "chai": "^4.2.0",
+    "jsdom": "^15.0.0",
+    "mocha": "^6.1.4"
+  },
+  "babel": {
+    "presets": ["@babel/preset-env", "@babel/react"]
+  }
+}
