@@ -23,3 +23,6 @@ An web application support Goolge OAuth Login, RESTful CRUD operations of stream
 - A client server implemented with Redux.
   
 *See setup instruction in the project folder.*
+
+### Task-manager: https://todoist-yxw.herokuapp.com/
+The React frontend part of a completed todo-list project which used Node.js/Express for backend API development([API directory](https://github.com/AlienEdith/Node.js/tree/master/task-manager)).
