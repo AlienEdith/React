@@ -5,14 +5,14 @@ body {
   background: linear-gradient(to right, #E684AE, #79CBCA, #77A1D3); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 }
 
-#container {
+.container {
 	margin: 100px auto;	/*Center the container*/
-	width: 360px;
 	background: #f7f7f7;
 	box-shadow: 0 0 3px rgba(0,0,0,0.1);
+	padding: 0
 }
 
-h1 {
+#IconBar {
 	background: #2980b9;
 	color: white;
 	margin: 0;
@@ -22,8 +22,17 @@ h1 {
 	font-weight: normal;
 }
 
-.fa-plus {
-	float: right;
+#LoginAlert, #devnote {
+	margin: 0;
+	padding: 10px 20px;
+}
+
+.fas:hover {
+	cursor: pointer;
+}
+
+.far:hover {
+	cursor: pointer;
 }
 
 input {
@@ -70,7 +79,7 @@ li:nth-child(2n){	/* 2n: define a pattern - every other*/
 	opacity: 0;
 }
 
-li:hover .delete{	/*when li is hover, select span*/
+.item:hover .delete{	/*when li is hover, select span*/
 	width: 40px;
 	opacity: 1;
 	transition: all 0.2s linear;
@@ -82,5 +91,16 @@ li:hover .delete{	/*when li is hover, select span*/
 }
 
 .task:hover{
+	cursor: pointer;
+}
+
+.avatar {
+	vertical-align: middle;
+	width: 30px;
+	height: 30px;
+	border-radius: 50%;
+  }
+
+.avatar:hover {
 	cursor: pointer;
 }

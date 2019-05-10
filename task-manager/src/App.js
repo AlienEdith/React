@@ -1,56 +1,44 @@
 import React from 'react';
 import { connect } from 'react-redux'
 
-import { getTaskList } from './actions';
-
-import LoginForm from './components/LoginForm'
-import RegisterForm from './components/RegisterForm'
-import NewTaskForm from './components/NewTaskForm'
-import Item from './components/Item'
+import IconBar from './components/IconBar/IconBar'
+import TaskContent from './components/TaskContent/TaskContent'
 
 class App extends React.Component {
   
 
-  shouldComponentUpdate(nextProps, nextState) {
+  shouldComponentUpdate(nextProps) {
     return (JSON.stringify(this.props.user) !== JSON.stringify(nextProps.user)) || (JSON.stringify(nextProps.tasks) !== JSON.stringify(this.props.tasks))
   }
 
-  getTasks = () => {
-    
-  }
-  renderTaskList = () => {
-    this.props.getTaskList(this.props.user.token)
 
-    const list = this.props.tasks.map(task => {
-      return <Item key={task._id} task={task} />
-    })
-    return list;
-  }
 
   renderContent = () => {
     if(this.props.user){
       return (
-        <div>
-          <NewTaskForm />
-          <ul>
-            {this.renderTaskList()}
-          </ul>
-        </div>
+        <TaskContent />
       )
     }
     return (
-      <div>Please Login First</div>
+      <h2 id="LoginAlert">Please Login First</h2>
     )
   }
 
   render() {
-    console.log("render")
     return (
-      <div id="container">
-        <RegisterForm />
-        <LoginForm />
-        <h1>To-do List<span id="plus"><i className="fas fa-plus"></i></span> </h1>
+      <div className="container">
+        <IconBar />
         {this.renderContent()}
+
+        <div id="devnote">
+          <h4>Dev Note</h4>
+          <ul>
+            <li>After register, you will get an email notification, pls check your spam folder! </li>
+            <li>The API development used JsonWebToken (not session), user need to login again after refreshing the page </li>
+            <li>After Upload / Update Avatar, logout/login again OR upload <b>twice</b> to see the changes (due to browser cache)</li>
+            <li>The Error handling now is using alert, might be improved later </li>
+          </ul>
+        </div>
       </div>
     );
   }
@@ -64,6 +52,4 @@ const mapStateToProps = (state) => {
   })
 }
 
-export default connect(mapStateToProps, {
-  getTaskList
-})(App);
+export default connect(mapStateToProps)(App);

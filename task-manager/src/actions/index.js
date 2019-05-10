@@ -1,35 +1,90 @@
 import db from '../apis/db'
 
 export const Register = (name, email, password) => {
-    return async(dispatch, getState) => {
+    return async(dispatch) => {
         const response = await db.post('/users', {
             name, email, password
         })
-        dispatch({
-            type: 'REGISTER',
-            payload: response.data
-        }); 
+        if(!response.data.error){
+            dispatch({
+                type: 'REGISTER',
+                payload: response.data
+            }); 
+        } else {
+            alert(response.data.error)
+        }
     }
 }
 
 export const Login = (email, password) => {
-    return async(dispatch, getState) => {
+    return async(dispatch) => {
         const response = await db.post('/users/login', {
             email, password
         })
+        if(!response.data.error){
+            dispatch({
+                type: 'LOGIN',
+                payload: response.data
+            }); 
+        } else {
+            alert(response.data.error)
+        }
+    }
+}
+
+export const Logout = (token) => {
+    return async(dispatch) => {
+        const response = await db.post('/users/logoutAll', null, 
+            { headers: {'Authorization': `Bearer ${token}`} }
+            )
         dispatch({
-            type: 'LOGIN',
+            type: 'LOGOUT',
             payload: response.data
         }); 
     }
 }
 
-export const getTaskList = (token) => {
-    return async(dispatch, getState) => {
+export const UpdateUserInfo = (token, name, email, password) => {
+    return async(dispatch) => {
+        const response = await db.patch('/users/me', {
+            name, email, password
+        }, {
+            headers: {'Authorization': `Bearer ${token}`}
+        })
+        if(!response.data.error){
+            dispatch({
+                type: 'UPDATE_USER_INFO',
+                payload: response.data
+            }); 
+        } else {
+            alert(response.data.error)
+        }
+    }
+}
+
+export const UploadAvatar = (token, file) => {
+    return async(dispatch) => {
+        const response = await db.post('/users/me/avatar',
+            file, {
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'content-type': 'multipart/form-data'
+            }
+        })
+        dispatch({
+            type: 'UPLOAD_AVATAR',
+            payload: response.data
+        }); 
+    }
+}
+
+export const getTaskList = (token, sortBy, completed) => {
+    return async(dispatch) => {
         const response = await db.get('/tasks',{
             headers: {'Authorization': `Bearer ${token}`},
             params: {
-                sortBy: "time:asc"
+                sortBy, 
+                completed
             }
         })
         dispatch({
@@ -40,7 +95,7 @@ export const getTaskList = (token) => {
 }
 
 export const addTask = (token, description, time) => {
-    return async(dispatch, getState) => {
+    return async(dispatch) => {
         const response = await db.post('/tasks', 
             { description: description, time: time}, 
             { headers: {'Authorization': `Bearer ${token}`}}
@@ -53,7 +108,7 @@ export const addTask = (token, description, time) => {
 }
 
 export const deleteTask = (token, id) => {
-    return async(dispatch, getState) => {
+    return async(dispatch) => {
         const response = await db.delete(`/tasks/${id}`,
             { headers: {'Authorization': `Bearer ${token}`} }
         )
@@ -65,7 +120,7 @@ export const deleteTask = (token, id) => {
 }
 
 export const completeTask = (token, id, bool) => {
-    return async(dispatch, getState) => {
+    return async(dispatch) => {
         const response = await db.patch(`/tasks/${id}`,
             { completed: bool },
             { headers: {'Authorization': `Bearer ${token}`} }
@@ -78,7 +133,7 @@ export const completeTask = (token, id, bool) => {
 }
 
 export const updateTask = (token, id, description, time) => {
-    return async(dispatch, getState) => {
+    return async(dispatch) => {
         const response = await db.patch(`/tasks/${id}`,
             { description: description, time: time },
             { headers: {'Authorization': `Bearer ${token}`} }

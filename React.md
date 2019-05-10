@@ -19,7 +19,7 @@ A JavaScript library for show content (HTML) to user (with [JSX](#JSX)) and hand
   - node_moduls: dependencies
   - package.json: record dependencies and configures
   - package-lock.json: record exact version of packages we install
-- Import System: `import React from 'react`, same as `require`, but for ES2015+.
+- Import System: `import React from 'react` (same as `require`, but for ES2015+)
 - Environment Variables: 
   - Config: `.env` file - `REACT_APP_KEY=VALUE`
   - Usage: `process.env.KEY`
@@ -48,13 +48,13 @@ A Function or a Class
   - Define a single component in a seperate file
   - Export:
     - `export default <ComponentName>` 
-    - `export const/class <ComponentName> = {...}`
+    - `export const/class <ComponentName> = {...} / ComponentAltName`
   - Import:
     - `import <ComponentName> from <FileName>.js`
     - `import { <ComponentName> } from <FileName>.js`
   - Use Component as a JSX Tag
     `<ComponentName />`
-- Component Configuration
+- Component Configuration: with `props` or `state`
   
 ### Class Component
     ```javascript
@@ -250,7 +250,7 @@ With `react-router`, each component needs to be designed to work in isolation (*
 - By default, `react-route` matched ALL routes that **contains** the path. With `exact`, only match the **exact** path. 
 - `<Switch>`: only route the **first** matched router
 - `<Link>`: same function as `<a>`, but do not refresh the page (rerender `index.html`).
-- `\:key`: Path Variable
+- `\:key`: Path Variables
   
   `value = this.props.match.params.key`
 
@@ -264,7 +264,7 @@ const query = queryString.parse(props.location.search);
 ```
 
 ## Redux
-package: `react-redux` (Integration layer between react and redux)
+package: `redux`, `react-redux` (Integration layer between react and redux), `redux-thunk` (For Async Actions)
 
 State management library. Make a **global state**, centralize data in one **global store**.
 
@@ -274,7 +274,7 @@ Workflow: To change `state`, we call an *Action Creator* that produces an *Actio
     ```javascript
     import { Provider } from 'react-redux';
     import { createStore, applyMiddleware } from 'redux';
-    import thunk from 'redux-thunk';
+    import thunk from 'redux-thunk';    // for asynchronouns actions with Redux
 
     import reducers from './reducers';  // ./reducers/index.js
 
@@ -311,7 +311,7 @@ Workflow: To change `state`, we call an *Action Creator* that produces an *Actio
         | Action | Method |
         | ------- | ------- | 
         | Remove an element from an array | `state.filter(element => element !== value)` |
-        | Add an element from an array | `[ ...state, newValue ]` |
+        | Add an element to an array | `[ ...state, newValue ]` |
         | Replace an element in an array | `state.map(el => el === oldValue ? newValue : el)` |
         | Update a property in an object | `{ ...state, oldKey: newValue }` |
         | Add a property in an object | `{ ...state, newKey: newValue }` |
@@ -345,7 +345,7 @@ Workflow: To change `state`, we call an *Action Creator* that produces an *Actio
     })(ComponentName);    
     ```
 
-#### Async Actions in Redux
+#### Asynchronous Actions in Redux
 package: `redux-thunk` (Middleware to help make requests in a redux application)
 
 Usage: 
@@ -368,6 +368,8 @@ Usage:
 
 #### Redux Dev Tools
     ```javascript
+    import { createStore, applyMiddleware, compose } from 'redux';
+
     const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
     const store = createStore(
         reducers, 
@@ -384,6 +386,7 @@ Usage:
 
 
 ## Others
+- `import './styles.css'`: import CSS files or other static files
 - `<React.Fragment`>: allows a component to return multiple elements. Fragments let you group a list of children without adding extra nodes to the DOM.
     ```javascript
     render() {
